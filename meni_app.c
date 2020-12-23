@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#define path "/dev/stred"
+#define fajl "/dev/stred"
 #define STRED_SIZE 100
 
 FILE *fp;
@@ -9,23 +9,23 @@ int br=STRED_SIZE;
 
 
 void meni (){
-	puts("");
-	puts("Izaberi jednu od ponudjenih opcija, ili unesi Q da terminiras aplikaciju");
-	puts("Format poziva je broj [mod] [opciona_vrednost]");
+	puts("Izaberi jednu od ponudjenih opcija");
+	puts("Format poziva je [mod] [opciona_vrednost]");
 	puts("");
 	puts("1: Procitaj trenutno stanje stringa");
-	puts("2: Upisi novi string, poziv zahteva string");
-	puts("3: Konkataniraj string na trenutni, poziv zahteva string");
+	puts("2: Upisi novi string (zahteva vrednost)");
+	puts("3: Konkataniraj string na trenutni (zahteva vrednost)");
 	puts("4: Izbrisi citav string");
 	puts("5: Izbrisi vodece i pratece space karaktere");
-	puts("6: Izbrisi izraz iz stringa, poziv zahteva izraz");
-	puts("7: izbrisi poslednjih n karaktera iz stringa, poziv zahteva broj");
+	puts("6: Izbrisi izraz iz stringa (zahteva vrednost)");
+	puts("7: izbrisi poslednjih n karaktera iz stringa (zahteva vrednost)");
+	puts("Q: quit");
 }
 
 void str_read(){
 	char *buff;
 
-	fp=fopen(path, "r");
+	fp=fopen(fajl, "r");
 	if (fp==NULL){
 		puts("Greska pri otvaranju datoteke");
 		return;
@@ -44,13 +44,13 @@ void str_read(){
 }
 
 void str_write(char *buff){
-	fp=fopen(path, "w");
+
+	fp=fopen(fajl, "w");
 	if (fp==NULL){
 		puts("Greska pri otvaranju datoteke");
 		return;
 	}
-	
-	fprintf(fp,"string=%s\n", buff);
+	fprintf(fp,"string=%s", buff);
 
 	if(fclose(fp)){
 		puts("Problem pri zatvaranju datoteke");
@@ -61,13 +61,13 @@ void str_write(char *buff){
 }
 
 void konkat_str(char *buff){
-	fp=fopen(path, "w");
+	fp=fopen(fajl, "w");
 	if (fp==NULL){
 		puts("Greska pri otvaranju datoteke");
 		return;
 	}
 	
-	fprintf(fp,"append=%s\n", buff);
+	fprintf(fp,"append=%s", buff);
 
 	if(fclose(fp)){
 		puts("Problem pri zatvaranju datoteke");
@@ -78,7 +78,7 @@ void konkat_str(char *buff){
 }
 
 void izbrisi(){
-	fp=fopen(path, "w");
+	fp=fopen(fajl, "w");
 	if (fp==NULL){
 		puts("Greska pri otvaranju datoteke");
 		return;
@@ -95,7 +95,7 @@ void izbrisi(){
 }
 
 void shrink(){
-	fp=fopen(path, "w");
+	fp=fopen(fajl, "w");
 	if (fp==NULL){
 		puts("Greska pri otvaranju datoteke");
 		return;
@@ -112,13 +112,13 @@ void shrink(){
 }
 
 void remove_substr(char *buff){
-	fp=fopen(path, "w");
+	fp=fopen(fajl, "w");
 	if (fp==NULL){
 		puts("Greska pri otvaranju datoteke");
 		return;
 	}
 	
-	fprintf(fp,"remove=%s\n", buff);
+	fprintf(fp,"remove=%s", buff);
 
 	if(fclose(fp)){
 		puts("Problem pri zatvaranju datoteke");
@@ -129,13 +129,12 @@ void remove_substr(char *buff){
 }
 
 void truncate(char *buff){
-	fp=fopen(path, "w");
+	fp=fopen(fajl, "w");
 	if (fp==NULL){
 		puts("Greska pri otvaranju datoteke");
 		return;
 	}
-	
-	fprintf(fp,"truncate=%s\n", buff);
+	fprintf(fp,"truncate=%s", buff);
 
 	if(fclose(fp)){
 		puts("Problem pri zatvaranju datoteke");
@@ -185,18 +184,3 @@ int main(){
 			}
 	}	
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
